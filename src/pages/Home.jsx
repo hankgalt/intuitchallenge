@@ -149,6 +149,11 @@ const Home = () => {
                                 <PokeCard name={poke.name} id={getId(poke.url)} />
                             </Grid>
                         ))}
+                        {pokemons.showSaved && Object.keys(pokemons.savedList).map(pokeId => (
+                            <Grid key={pokemons.savedList[pokeId]} item>
+                                <PokeCard name={pokemons.savedList[pokeId]} id={pokeId} />
+                            </Grid>
+                        ))}
                     </Grid>
                 </Grid>
             </Grid>
