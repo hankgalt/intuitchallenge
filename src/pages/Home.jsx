@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import PokeCard from '../components/PokeCard';
+import { listActions } from '../actions/list.actions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,8 +25,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const getId = (url) => {
+    const items = url.split('/');
+    let id = items[items.length - 1];
+    if (id === '') id = items[items.length - 2];
+    return id;
+}
+
 const Home = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const pokemons = useSelector(state => state.pokemons);
 
     const handleChange = (event) => {
         console.log(event.target.checked);
@@ -32,6 +44,10 @@ const Home = () => {
     const handleSearch = (event) => {
         console.log(event.target.value);
     };
+
+    useEffect(() => {
+        dispatch(listActions.fetchList(pokemons.offset, pokemons.limit));
+    }, []);
 
     return (
         <div className={classes.root}>
@@ -43,7 +59,7 @@ const Home = () => {
                                 <FormControlLabel
                                     control={
                                     <Switch
-                                        checked={false}
+                                        checked={pokemons.showSaved}
                                         onChange={handleChange}
                                         name="showSaved"
                                         color="primary"
@@ -66,9 +82,9 @@ const Home = () => {
                         </Grid>
                     </Grid>
                     <Grid container>
-                        {[1,2,3,4,5,6,7,8,9,0,11].map(poke => (
-                            <Grid key={poke} item>
-                                <Typography align="center">{poke}</Typography>
+                        {!pokemons.showSaved && pokemons.results.map(poke => (
+                            <Grid key={poke.name} item>
+                                <PokeCard name={poke.name} id={getId(poke.url)} />
                             </Grid>
                         ))}
                     </Grid>

@@ -49,6 +49,20 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'public')
         },
+        proxy: {
+            '/poke': {
+                target: 'https://pokeapi.co/api/v2',
+                pathRewrite: { '^/poke': '' },
+                secure: false,
+                changeOrigin: true,
+            },
+            '/loc': {
+                target: 'https://api.craft-demo.net/pokemon',
+                pathRewrite: { '^/loc': '' },
+                secure: false,
+                changeOrigin: true,
+            }
+        },
         hot: true,
         historyApiFallback: true,
         port: 4000
