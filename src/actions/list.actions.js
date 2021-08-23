@@ -2,7 +2,9 @@ import { listConstants } from '../constants/list.constants';
 import { listService } from '../services/list.service';
 
 export const listActions = {
-    fetchList
+    fetchList,
+    showSaved,
+    hideSaved
 };
 
 function fetchList(offset, limit) {
@@ -23,4 +25,13 @@ function fetchList(offset, limit) {
     function request(data) { return { type: listConstants.LIST_FETCH_REQUEST, data } }
     function success(data) { return { type: listConstants.LIST_FETCH_SUCCESS, data } }
     function failure(error) { return { type: listConstants.LIST_FETCH_FAILURE, error } }
+}
+
+function showSaved() {
+    const savedList = listService.showSaved();
+    return { type: listConstants.SHOW_SAVED, data: savedList };
+}
+
+function hideSaved() {
+    return { type: listConstants.HIDE_SAVED };
 }
