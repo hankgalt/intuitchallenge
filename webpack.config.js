@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -43,7 +44,8 @@ module.exports = {
         }),
         new webpack.SourceMapDevToolPlugin({
             filename: '[file].map[query]'
-        })
+        }),
+        new Dotenv(),
     ],
     devServer: {
         static: {

@@ -27,7 +27,7 @@ async function fetchLocations(id) {
     //         withCredentials: true,
     //         credentials: 'include',
     //         headers: {
-    //             'X-Api-Key': 'HHko9Fuxf293b3w56zAJ89s3IcO9D5enaEPIg86l'
+    //             'X-Api-Key': process.env.LOC_API_KEY
     //         }
     //     }
     // );
