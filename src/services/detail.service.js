@@ -6,27 +6,35 @@ export const detailService = {
 };
 
 async function fetchDetails(id) {
-    const retrievedObject = localStorage.getItem(id);
-    const saved = localStorage.getItem('saved');
     let savedList = {};
+    const saved = localStorage.getItem('saved');
     if (saved) {
         savedList = JSON.parse(saved);
     }
-    if (!retrievedObject) {
-        const response = await fetch(
-            `poke/pokemon/${id}`,
-        );
-        const result = await response.json();
-        localStorage.setItem(id, JSON.stringify(result));
-        return { ...result, saved: !!savedList[parseInt(id)] }
-    } else {
-        const result = JSON.parse(retrievedObject);
-        return { ...result, saved: !!savedList[parseInt(id)] }
-    }
+    const response = await fetch(
+        `poke/pokemon/${id}`,
+    );
+    const result = await response.json();
+    return { ...result, saved: !!savedList[parseInt(id)] };
 }
 
 async function fetchLocations(id) {
     console.log("fetchLocations() - id: ", id);
+    // const response = await fetch(
+    //     `loc/${id}`,
+    //     {
+    //         method: 'GET',
+    //         withCredentials: true,
+    //         credentials: 'include',
+    //         headers: {
+    //             'X-Api-Key': 'HHko9Fuxf293b3w56zAJ89s3IcO9D5enaEPIg86l'
+    //         }
+    //     }
+    // );
+    // const result = await response.json();
+    // if (!result.message) {
+    //     return result.locations;
+    // }
     return [[32.715736, -117.161087]];
 }
 

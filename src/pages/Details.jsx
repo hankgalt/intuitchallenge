@@ -92,10 +92,6 @@ const Details = () => {
     useEffect(() => {
         const id = pathname.replace('/', '');
         dispatch(detailActions.fetchDetails(id));
-    }, []);
-
-    useEffect(async () => {
-        const id = pathname.replace('/', '');
         dispatch(detailActions.fetchLocations(id));
     }, []);
 
